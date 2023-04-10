@@ -44,15 +44,14 @@ jest.setTimeout(6000000);
 describe("test",  () => {
    
     it("should index and query a document", async () => {
-        await DependencyManager.init({env: "dev"});
+        await DependencyManager.init({env: "test"});
         const account = await dependencies.services.accountService.create({name: "test"});
         const document = await dependencies.services.documentService.create({accountId: account.id, collectionName:"test",document : {
             name: "test",
             content: doc
         }});
-        const chat = await dependencies.services.chatService.startChat({documentId: document.id,accountId: account.id, collectionId:document.collectionId, messages: [
-                {"role": "user", content: "can you explain me how to initialize and get data from cache using simple lru library, I would like a max size of 75 elements?"}
-            ]})
+        const chat = await dependencies.services.chatService.startChat({documentId: document.id,accountId: account.id, collectionId:document.collectionId,
+            message: "can you explain me how to initialize and get data from cache using simple lru library, I would like a max size of 75 elements?"})
         
         console.log(chat)
     });

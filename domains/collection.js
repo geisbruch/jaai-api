@@ -14,12 +14,12 @@ class Collection extends Model {
 function defineModel(seq) {
     Collection.init({
         id:{
-            field: "id",
+            field: "collection_id",
             type: DataTypes.STRING(256),
             primaryKey: true
         },
         status: {
-            field: "status",
+            field: "collection_status",
             type: DataTypes.ENUM(...Object.values(CollectionStatus)),
             allowNull: false,
             validate: {
@@ -28,7 +28,7 @@ function defineModel(seq) {
             }
         },
         name: {
-            field: "name",
+            field: "collection_name",
             type: DataTypes.STRING(1024)
         },
         accountId: {
@@ -63,7 +63,7 @@ function defineModel(seq) {
             },
             {
                 unique: true,
-                fields: ["account_id","name"]
+                fields: ["account_id","collection_name"]
             }
         ],
         underscored: true

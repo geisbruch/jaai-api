@@ -1,0 +1,17 @@
+FROM node:lts AS BUILD_IMAGE
+WORKDIR '/app'
+
+ADD ./package.json ./
+
+RUN npm install
+ADD . .
+
+FROM node:lts-alpine
+WORKDIR '/app'
+RUN apk add postgresql-client
+COPY --from=BUILD_IMAGE /app .
+ADD ./start_docker.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/start_docker.sh
+CMD /usr/local/bin/start_docker.sh
+
+EXPOSE 3000

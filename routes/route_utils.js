@@ -14,23 +14,26 @@ class RouteUtils {
         const navigated = [];
         const toNavigate = [];
         Object.keys(originalObject).forEach((e) => {
-           toNavigate.push({elemKey: e, root: originalObject});
+           toNavigate.push({elemKey: e, root: originalObject, newRoot: ret});
         });
         while (toNavigate.length > 0) {
-            const {elemKey, root} = toNavigate.shift();
+            const {elemKey, root, newRoot} = toNavigate.shift();
             const elem = root[elemKey];
-            if(typeof (elem) === "object") {
+            if(typeof (elem) === "object" && elem !== undefined && elem !== null) {
                 //Avoid circular reference
                 if(navigated.indexOf(elem) != -1) {
                     continue;
                 } else {
                     navigated.push(elem);
+                    const r = {}
+                    newRoot[f(elemKey)] = r;
                     Object.keys(elem).forEach((e) => {
-                        toNavigate.push({elemKey: e, root: elem});
+                        toNavigate.push({elemKey: e, root: elem, newRoot: r});
                     });
                 }
+            } else {
+                newRoot[f(elemKey)] = elem;
             }
-            ret[f(elemKey)] = elem;
         }
         return ret;
     }

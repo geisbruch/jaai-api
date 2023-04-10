@@ -1,6 +1,5 @@
 const BASE_PATH = "/collection";
 const {constants} = require("http2");
-const jq = require('node-jq')
 const {ERROR_TYPES} = require("../errors/errors");
 
 class CollectionRouter {
@@ -15,8 +14,14 @@ class CollectionRouter {
                 const account = await this.collectionService.create(data);
     
                 res.status(constants.HTTP_STATUS_OK);
-                res.send(await jq.run(". | {id, status, name}", account, {input: "json", output: "json"}));
+                const ret = {
+                    id: account.id,
+                    status: account.status,
+                    name: account.name
+                }
+                res.send(ret);
             }catch (e) {
+                console.log(e);
                 if(e.name === ERROR_TYPES.EntityNotFoundException) {
                     res.status(constants.HTTP_STATUS_PRECONDITION_FAILED)
                     res.send({error: e.message});

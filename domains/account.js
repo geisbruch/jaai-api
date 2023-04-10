@@ -15,12 +15,12 @@ class Account extends Model {
 function defineModel(seq) {
     Account.init({
         id:{
-            field: "id",
+            field: "account_id",
             type: DataTypes.STRING(256),
             primaryKey: true
         },
         status: {
-            field: "status",
+            field: "account_status",
             type: DataTypes.ENUM(...Object.values(AccountStatus)),
             allowNull: false,
             validate: {
@@ -29,7 +29,7 @@ function defineModel(seq) {
             }
         },
         name: {
-            field: "name",
+            field: "account_name",
             type: DataTypes.STRING(1024)
         },
         suspendedMessage: {

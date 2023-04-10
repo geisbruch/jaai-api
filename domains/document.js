@@ -16,12 +16,12 @@ class Document extends Model {
 function defineModel(seq) {
     Document.init({
         id:{
-            field: "id",
+            field: "document_id",
             type: DataTypes.STRING(256),
             primaryKey: true
         },
         status: {
-            field: "status",
+            field: "document_status",
             type: DataTypes.ENUM(...Object.values(DocumentStatus)),
             allowNull: false,
             validate: {
@@ -30,15 +30,15 @@ function defineModel(seq) {
             }
         },
         documentUrl: {
-            field: "id",
+            field: "document_url",
             type: DataTypes.STRING(1024)
         },
         name: {
-            field: "name",
+            field: "document_name",
             type: DataTypes.STRING(1024)
         },
         priority: {
-            field: "priority",
+            field: "document_priority",
             type: DataTypes.INTEGER
         },
         collectionId: {
@@ -60,7 +60,7 @@ function defineModel(seq) {
                 fields: ["collection_id"]
             }, {
                 unique: false,
-                fields: ["collection_id", "name"]
+                fields: ["collection_id", "document_name"]
             },
         ],
         underscored: true

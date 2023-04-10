@@ -1,7 +1,9 @@
 const ERROR_TYPES = {
     EntityNotFoundException: "EntityNotFoundException",
     InvalidDocument: "InvalidDocument",
-    InvalidChatConfig: "InvalidChatConfig"
+    InvalidChatConfig: "InvalidChatConfig",
+    InvalidDocumentConfig: "InvalidDocumentConfig"
+    
 }
 
 class BaseError extends Error {
@@ -32,6 +34,11 @@ class InvalidChatConfig extends BaseError {
     constructor({message, error}) {
         super({message, error, name: ERROR_TYPES.InvalidChatConfig});
     }
-    
 }
-module.exports={BaseError, EntityNotFoundException, InvalidDocument, InvalidChatConfig, ERROR_TYPES};
+
+class InvalidDocumentConfig extends BaseError {
+    constructor({message, error}) {
+        super({message, error, name: ERROR_TYPES.InvalidDocumentConfig});
+    }
+}
+module.exports={BaseError, EntityNotFoundException, InvalidDocument, InvalidChatConfig, InvalidDocumentConfig, ERROR_TYPES};

@@ -98,23 +98,22 @@ class SearchService {
             const embedding = await this.createEmbedding({input});
     
             body = {
+                size: 3,
                 query: {
-                    size: 3,
-                    query: {
-                        knn: {
-                            embedding: {
-                                vector: embedding,
-                                k: 9
-                            }
+                    knn: {
+                        embedding: {
+                            vector: embedding,
+                            k: 9
                         }
                     }
                 }
             }
         }
-        return await this.client.search({
+        const res = await this.client.search({
             index,
             body
         })
+        return res.body.hits.hits;
     }
 }
 

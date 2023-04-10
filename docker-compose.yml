@@ -1,0 +1,49 @@
+version: '3'
+services:
+  # Build & Launch development database
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_PASSWORD=testdb
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./test_infrastructure/postgres_data:/var/lib/postgresql/data
+  # Build & Launch the development environment
+  api:
+    build:
+      dockerfile: Dockerfile.test
+      context: ./
+    environment:
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=testdb
+      - DB_HOSTNAME=postgres
+      - DB_PORT=5432
+      - DB_NAME=api
+      - DB_SQL_DEBUG=true
+      - DB_SCHEMA=test
+      - NODE_ENV=test
+      - OPENSEARCH_HOST=http://opensearch:9200
+      - OPENAI_API_KEY=$OPENAI_API_KEY  ## https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./:/app
+    depends_on:
+      - opensearch
+      - postgres
+
+
+  opensearch:
+    image: 'opensearchproject/opensearch:latest'
+    environment:
+      - discovery.type=single-node
+      - plugins.security.disabled=true
+      - plugins.security.ssl.http.enabled=false
+    volumes:
+      - ./test_infrastructure/opensearch:/usr/share/opensearch/data/nodes
+    ports:
+      - 9200:9200
+      - 9600:9600
+
+

@@ -1,6 +1,8 @@
 const DomainUtils = require("../domains/domain_utils");
 const {AccountStatus} = require("../domains/account");
 const {EntityNotFoundException} = require("../errors/errors");
+const ServiceUtils = require("./service_utils");
+
 class AccountService {
     constructor(accountModel, documentsBucket) {
         this.accountModel = accountModel;
@@ -17,7 +19,7 @@ class AccountService {
             documentsRepositoryUrl: `${this.documentsBucket}/${id}`
         };
         const createdAccount =  await this.accountModel.create(account);
-        return createdAccount;
+        return ServiceUtils.dbObjectToObject(createdAccount,["id", "status", "name", "suspendedMessage", "documentsRepositoryUrl"]);
     }
     
     async getById(id) {

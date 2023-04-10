@@ -1,10 +1,9 @@
 const BASE_PATH = "/chat";
 const {constants} = require("http2");
-const jq = require('node-jq')
 const {ERROR_TYPES} = require("../errors/errors");
 
 class CollectionRouter {
-    constructor(documentService) {
+    constructor(chatService) {
         this.chatService = chatService;
     }
     
@@ -29,10 +28,10 @@ class CollectionRouter {
     
         })
     
-        app.post(`BASE_PATH/:chatId`, async (req, res) => {
+        app.post(`${BASE_PATH}/:chatId`, async (req, res) => {
             const data = req.body;
             try {
-                const chat = await this.chatService.continueChat(req.params.chatId, req.data);
+                const chat = await this.chatService.continueChat({chatId: req.params.chatId, message:data.message});
             
                 res.status(constants.HTTP_STATUS_OK);
                 res.send(chat);
