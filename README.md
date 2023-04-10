@@ -156,8 +156,9 @@ A very important part of it is the prompt you use for the context. By default, t
 ## Next Steps
 
 - Support PDFs
-- Suport Audio
+- Support Audio
 - Support images
 - Testing (yes it has been started just as a discovery but now we should add som testing)
+- Add a frontend
 - Offer it as SaaS
 
