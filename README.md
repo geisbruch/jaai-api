@@ -33,7 +33,7 @@ Here some examples about how to usage
 
 ### First create an "account"
 
-```
+```bash
 curl -X POST 127.0.0.1:3000/account -d '{"name":"test"}' -H"Content-Type: application/json"
 
 Example response:
@@ -45,7 +45,7 @@ Example response:
 Node: your documents will be created into collections, a collection is the "search unit" you can create add-hoc chat gpt query's
 using either a collection or a document
 
-```
+```bash
 ACCOUNT_ID=df0011cc4e104aeb85c7a1eaa98c02d2
 curl -XPOST 127.0.0.1:3000/document -H"X-Account-Id: $ACCOUNT_ID" -H"X-Collection-Name: test" -H"X-Document-Name: test1" -H"Content-Type: text/plain" --data-binary "@$PWD/errors/errors.js" 
 
@@ -57,7 +57,7 @@ Here we have indexed the errors of this API
 
 If you want to index json documents
 
-```
+```bash
 curl -XPOST 127.0.0.1:3000/document -d  "{\"account_id\":\"$ACCOUNT_ID\", \"collection_name\":\"test\", \"document\":{\"name\":\"doc 1\",\"content\":\"THE CONTENT GOES HERE\"}}"
 ```
 
@@ -65,14 +65,14 @@ curl -XPOST 127.0.0.1:3000/document -d  "{\"account_id\":\"$ACCOUNT_ID\", \"coll
 
 To do that we will ``start a chat``
 
-```
+```bash
 ACCOUNT_ID=df0011cc4e104aeb85c7a1eaa98c02d2
 COLLECTION_ID=7e3f4c7459e646a7babbf6e95e502ab3
 curl -X POST -H"Content-Type: application/json" -d "{\"collection_id\":\"$COLLECTION_ID\", \"message\":\"can you tell me what errors have I defined ?\"}" http://127.0.0.1:3000/chat
 ```
 
 And here the magic happens and you should get something like it
-```
+```bash
 {"message":{"role":"assistant","content":"Yes, the defined errors are: EntityNotFoundException, InvalidDocument,
  InvalidChatConfig, and InvalidDocumentConfig. They are defined in the `ERROR_TYPES` object."},
  "usage":{"prompt_tokens":610,"completion_tokens":33,"total_tokens":643},
@@ -81,7 +81,7 @@ And here the magic happens and you should get something like it
 
 You can also set an specific document you want to use instead of the whole collection
 
-```
+```bash
 ACCOUNT_ID=df0011cc4e104aeb85c7a1eaa98c02d2
 COLLECTION_ID=7e3f4c7459e646a7babbf6e95e502ab3
 DOCUMENT_ID=a22d3e0cf8c24282b7ab7fc3f4049dcd
@@ -96,7 +96,7 @@ curl -X POST -H"Content-Type: application/json" -d "{\"collection_id\":\"$COLLEC
 
 If you want you can follow the conversation over the same context to do that (by now chat memory is in the api instance memory)
 
-```
+```bash
 CHAT_ID=0496e6728fbf493da7a53428866c59e9
 curl -X POST -H"Content-Type: application/json" -d "{\"message\":\"can you show me a usage example of those errors ?\"}" http://127.0.0.1:3000/chat/$CHAT_ID
 
