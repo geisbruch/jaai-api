@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@opensearch-project/opensearch": "^2.2.0",
+    "@opensearch-project/opensearch": "^2.2.1",
     "@sequelize/core": "7.0.0-alpha.10",
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
